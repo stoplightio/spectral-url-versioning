@@ -1,0 +1,73 @@
+{
+  "name": "@stoplight/spectral-api-versioning-ruleset",
+  "version": "0.0.0",
+  "description": "There's no one right way to version, but there's a lot of objectively bad ways you want to avoid.",
+  "main": "dist/ruleset.js",
+  "module": "dist/ruleset.mjs",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./dist/ruleset.d.ts",
+      "import": "./dist/ruleset.mjs",
+      "require": "./dist/ruleset.js"
+    }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsup",
+    "type-check": "tsc --noEmit --noErrorTruncation --pretty false --incremental false",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stoplightio/spectral-api-versioning-ruleset.git"
+  },
+  "keywords": [
+    "openapi",
+    "openapi3",
+    "openapi31",
+    "api-design"
+  ],
+  "author": "Phil Sturgeon <phil@stoplight.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stoplightio/spectral-api-versioning-ruleset/issues"
+  },
+  "homepage": "https://github.com/stoplightio/spectral-api-versioning-ruleset#readme",
+  "dependencies": {
+    "@stoplight/spectral-formats": "^1.2.0",
+    "@stoplight/spectral-functions": "^1.6.1"
+  },
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "^3.0.1",
+    "@stoplight/types": "^13.6.0",
+    "@types/jest": "^28.1.6",
+    "jest": "^28.0",
+    "ts-jest": "^28.0",
+    "tsup": "^6.2.3",
+    "typescript": "^4.8.4"
+  },
+  "tsup": {
+    "entry": [
+      "src/ruleset.ts"
+    ],
+    "clean": true,
+    "dts": true,
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "sourcemap": true,
+    "noExternal": [
+      "@stoplight/types"
+    ],
+    "external": [
+      "@stoplight/spectral-core"
+    ],
+    "footer": {
+      "js": "module.exports = module.exports.default;"
+    }
+  }
+}
