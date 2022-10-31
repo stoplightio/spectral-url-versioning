@@ -44,7 +44,7 @@ export default {
     'no-path-versioning': {
       message: "{{path}} contains a version number. API paths SHOULD NOT have versioning in the path. It SHOULD be in the server URL instead.",
       description: "Versioning in the path can lead to confusion that is best avoided. Perhaps multiple global versions are in the same document, but they ref shared schemas which change over time and break backwards compatibility unintentionally. Perhaps people are trying to implement method-level URL versioning which SHOULD NOT be used.",
-      severity: DiagnosticSeverity.Error,
+      severity: DiagnosticSeverity.Warning,
       given: "$.paths[*]~",
       formats: [oas2, oas3],
       then: {
