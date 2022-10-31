@@ -1,13 +1,13 @@
 # Spectral API Versioning Ruleset
 
-[![NPM Downloads](https://img.shields.io/npm/dw/@stoplight/spectral-api-versioning-ruleset?color=blue)](https://www.npmjs.com/package/@stoplight/spectral-api-versioning-ruleset) [![Stoplight Forest](https://img.shields.io/ecologi/trees/stoplightinc)][stoplight_forest]
+[![NPM Downloads](https://img.shields.io/npm/dw/@stoplight/spectral-url-versioning?color=blue)](https://www.npmjs.com/package/@stoplight/spectral-url-versioning) [![Stoplight Forest](https://img.shields.io/ecologi/trees/stoplightinc)][stoplight_forest]
 
 Scan an [OpenAPI](https://spec.openapis.org/oas/v3.1.0) document to detect security issues. As OpenAPI is only describing the surface level of the API it cannot see what is happening in your code, but it can spot obvious issues and outdated standards being used.
 
 ## Installation
 
 ``` bash
-npm install --save -D @stoplight/spectral-api-versioning-ruleset
+npm install --save -D @stoplight/spectral-url-versioning
 npm install --save -D @stoplight/spectral-cli
 ```
 
@@ -19,13 +19,13 @@ Create a local ruleset that extends the ruleset. In its most basic form this jus
 ```
 cd ~/src/<your-api>
 
-echo 'extends: ["@stoplight/spectral-api-versioning-ruleset"]' > .spectral.yaml
+echo 'extends: ["@stoplight/spectral-url-versioning"]' > .spectral.yaml
 ```
 
 _If you're using VS Code or Stoplight Studio then the NPM modules will not be available. Instead you can use the CDN hosted version:_
 
 ```
-echo 'extends: ["https://unpkg.com/@stoplight/spectral-api-versioning-ruleset@1.0.0/dist/ruleset.js"]' > .spectral.yaml
+echo 'extends: ["https://unpkg.com/@stoplight/spectral-url-versioning@1.0.0/dist/ruleset.js"]' > .spectral.yaml
 ```
 
 _**Note:** You need to use the full URL with CDN hosted rulesets because Spectral [cannot follow redirects through extends](https://github.com/stoplightio/spectral/issues/2266)._
@@ -40,16 +40,16 @@ You should see some output like this:
 
 ```
 /Users/phil/src/protect-earth-api/api/openapi.yaml
-  44:17      warning  owasp:api3:2019-define-error-responses-400:400 response should be defined.. Missing responses[400]  paths./upload.post.responses
+  44:17      warning  no-path-versioning #/paths/~1v1 contains a version number. API paths SHOULD NOT have versioning in the path. It SHOULD be in the server URL instead.  paths./v1
 ```
 
-Now you have some things to work on for your API. Thankfully these are only at the `warning` and `information` severity, and that is not going to [fail continuous integration](https://meta.stoplight.io/docs/spectral/ZG9jOjExNTMyOTAx-continuous-integration) (unless [you want them to](https://meta.stoplight.io/docs/spectral/ZG9jOjI1MTg1-spectral-cli#error-results)).
+Now you have some things to work on for your API. Thankfully these are only at the `warning` severity, and that is not going to [fail continuous integration](https://meta.stoplight.io/docs/spectral/ZG9jOjExNTMyOTAx-continuous-integration) (unless [you want them to](https://meta.stoplight.io/docs/spectral/ZG9jOjI1MTg1-spectral-cli#error-results)).
 
 There are [a bunch of other rulesets](https://github.com/stoplightio/spectral-rulesets) you can use, or use for inspiration for your own rulesets and API Style Guides.
 
 ## 🎉 Thanks
 
-- [Alex Savage](https://github.com/savage-alex) - Created `no-path-versioning` which is a fantasticly simple solution to avoid so many problems.
+- [Phil Sturgeon](https://github.com/philsturgeon) - Made some of these fairly opinionated but probably reasonable rules.
 
 ## 📜 License
 
