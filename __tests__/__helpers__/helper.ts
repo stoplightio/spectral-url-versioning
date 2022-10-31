@@ -9,18 +9,17 @@ type Scenario = ReadonlyArray<
     name: string;
     document: Record<string, unknown> | Document<unknown, any>;
     errors: ReadonlyArray<Partial<IRuleResult>>;
-    mocks?: Record<string, Record<string, unknown>>;
   }>
 >;
 
 export default (ruleName: RuleName, tests: Scenario): void => {
   describe(`Rule ${ruleName}`, () => {
-    const concurrent = tests.every(test => test.mocks === void 0 || Object.keys(test.mocks).length === 0);
     for (const testCase of tests) {
-      (concurrent ? it.concurrent : it)(testCase.name, async () => {
+      it.concurrent(testCase.name, async () => {
         const s = createWithRules([ruleName]);
         const doc = testCase.document instanceof Document ? testCase.document : JSON.stringify(testCase.document);
         const errors = await s.run(doc);
+
         expect(errors.filter(({ code }) => code === ruleName)).toEqual(
           testCase.errors.map(error => expect.objectContaining(error) as unknown),
         );
