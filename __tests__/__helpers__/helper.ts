@@ -1,4 +1,4 @@
-import { IRuleResult, Spectral, Document, Ruleset, RulesetDefinition } from '@stoplight/spectral-core';
+import { IRuleResult, Spectral, Document, Ruleset } from '@stoplight/spectral-core';
 import { httpAndFileResolver } from '@stoplight/spectral-ref-resolver';
 import sourceRuleset from '../../src/ruleset';
 
@@ -33,7 +33,7 @@ export function createWithRules(rules: (keyof Ruleset['rules'])[]): Spectral {
 
   s.setRuleset({
     extends: [
-      [sourceRuleset as RulesetDefinition, 'off'],
+      [sourceRuleset, 'off'],
     ],
     rules: rules.reduce((obj: any, name) => {
       obj[name] = true;

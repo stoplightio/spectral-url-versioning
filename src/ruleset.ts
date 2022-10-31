@@ -20,6 +20,23 @@ export default {
         function: onlyOneServerVersion
       }
     },
+    
+    /**
+     * @author: Phil Sturgeon <https://github.com/philsturgeon>
+     */
+    'only-major-api-versions': {
+      message: "Version numbers SHOULD contain major only, no minor or patch.",
+      description: "Using semver-like versions for an API are almost never necessary, because breaking changes could only happen on a major version, and non-breaking changes don't matter. The entire concept is invalidated by API evolution means that a minor version can be deployed that adds new functionality, and that should not break anything. If you have a patch, getting that patched version out to clients immediately means fewer production issues, and you don't want to wait for them to redeploy the client application to use the new server URL.",
+      severity: DiagnosticSeverity.Warning,
+      given: "$.servers..url",
+      formats: [oas3],
+      then: {
+        function: pattern,
+        functionOptions: {
+          notMatch: '/(v|version)?([0-9]+[\\.|\\/|$]?){2,}/i',
+        },
+      },
+    },
 
     /**
      * @author: Alex Savage <https://github.com/savage-alex>
@@ -27,7 +44,7 @@ export default {
     'no-path-versioning': {
       message: "{{path}} contains a version number. API paths SHOULD NOT have versioning in the path. It SHOULD be in the server URL instead.",
       description: "Versioning in the path can lead to confusion that is best avoided. Perhaps multiple global versions are in the same document, but they ref shared schemas which change over time and break backwards compatibility unintentionally. Perhaps people are trying to implement method-level URL versioning which SHOULD NOT be used.",
-      severity: DiagnosticSeverity.Warning,
+      severity: DiagnosticSeverity.Error,
       given: "$.paths[*]~",
       formats: [oas2, oas3],
       then: {
