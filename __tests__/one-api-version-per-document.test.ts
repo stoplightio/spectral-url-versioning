@@ -36,7 +36,22 @@ testRule("one-api-version-per-document", [
 		errors: [],
 	},
 
-
+	{
+		name: "valid case: port numbers are ok",
+		document: {
+			openapi: "3.1.0",
+			info: { version: "1.0" },
+			servers: [
+        {
+          url: 'https://dev.example.org:3000/version123'
+        },
+        {
+          url: 'https://prod.example.org/version123'
+        },
+      ],
+		},
+		errors: [],
+	},
 
 	{
 		name: "invalid: multiple versions in directory",
@@ -72,6 +87,29 @@ testRule("one-api-version-per-document", [
         },
         {
           url: 'https://v2.example.org/',
+        },
+      ],
+    },
+    errors: [
+      {
+        message: "Multiple API versions detected in Server URLs.",
+        path: ["servers"],
+        severity: DiagnosticSeverity.Error,
+      },
+    ],
+	},
+
+  {
+    name: "invalid: multiple versions in middle subdir",
+    document: {
+      openapi: "3.1.0",
+      info: { version: "1.0" },
+      servers: [
+        {
+          url: 'https://api.v1.example.org/',
+        },
+        {
+          url: 'https://api.v2.example.org/',
         },
       ],
     },

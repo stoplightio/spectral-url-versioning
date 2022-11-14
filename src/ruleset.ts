@@ -33,7 +33,7 @@ export default {
       then: {
         function: pattern,
         functionOptions: {
-          notMatch: '/(v|version)?([0-9]+[\\.|\\/|$]?){2,}/i',
+          notMatch: '/[\\.|\\/|](v|version)?([0-9]+[\\.|\\/|$]?){2,}/i',
         },
       },
     },

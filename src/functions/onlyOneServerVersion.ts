@@ -1,30 +1,7 @@
 import { createRulesetFunction } from '@stoplight/spectral-core';
 
-// export default createRulesetFunction({
-//   input: null,
-//   options: null,
-// }, function onlyOneServerVersion (input: any): IFunctionResult[] {
-
-//   // const errorList = [];
-//   const { servers } = input;
-
-
-//     // errorList.push({
-//     //   message: `versions`,
-//     //   path: ["$.servers"]
-//     // });
-
-
-//   return [];
-// });
-
-
-
-
-
-
 /**
- * @author Jane Smith <jsmith@example.com>
+ * @author Phil Sturgeon <https://github.com/philsturgeon>
  */
 export default createRulesetFunction({
   input: null,
@@ -33,7 +10,7 @@ export default createRulesetFunction({
   },
 }, (targetVal: any) => {
 
-  const versionsMatches = targetVal.map(({ url }: any) => url.match(/((?:\/)(v|version)?[0-9]{1,3}(?:\/)?)/i)[0]);
+  const versionsMatches = targetVal.map(({ url }: any) => url.match(/([\\.|\\/|](v|version)?[0-9]{1,3}(?:\/)?)/i)[0]);
 
   // If there are fewer than two versions mentioned there cannot be multiple versions
   if (versionsMatches < 2) {
