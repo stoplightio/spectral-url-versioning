@@ -8,12 +8,16 @@ export default createRulesetFunction({
   options: {
     type: ['null'],
   },
-}, (targetVal: any) => {
+}, (targetVal: Array<any>) => {
+
+  if (! Array.isArray(targetVal)) {
+    return [];
+  }
 
   const versionsMatches = targetVal.map(({ url }: any) => url.match(/([\\.|\\/|](v|version)?[0-9]{1,3}(?:\/)?)/i)[0]);
 
   // If there are fewer than two versions mentioned there cannot be multiple versions
-  if (versionsMatches < 2) {
+  if (versionsMatches.length < 2) {
     return [];
   }
   

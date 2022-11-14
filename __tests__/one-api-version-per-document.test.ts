@@ -53,6 +53,35 @@ testRule("one-api-version-per-document", [
 		errors: [],
 	},
 
+  {
+    name: "valid case: no servers defined",
+    document: {
+      openapi: "3.1.0",
+      info: { version: "1.0" },
+    },
+    errors: [],
+  },
+  
+  {
+    name: "valid case: empty servers defined",
+    document: {
+      openapi: "3.1.0",
+      info: { version: "1.0" },
+      servers: [],
+    },
+    errors: [],
+  },
+  
+  {
+    name: "valid case: weird servers defined",
+    document: {
+      openapi: "3.1.0",
+      info: { version: "1.0" },
+      servers: {},
+    },
+    errors: [],
+  },
+
 	{
 		name: "invalid: multiple versions in directory",
 		document: {
