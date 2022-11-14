@@ -54,6 +54,23 @@ testRule("one-api-version-per-document", [
 	},
 
   {
+    name: "valid case: no versions",
+    document: {
+      openapi: "3.1.0",
+      info: { version: "1.0" },
+      servers: [
+        {
+          url: "https://dev.example.org",
+        },
+        {
+          url: "https://prod.example.org",
+        },
+      ],
+    },
+    errors: [],
+  },
+
+  {
     name: "valid case: no servers defined",
     document: {
       openapi: "3.1.0",

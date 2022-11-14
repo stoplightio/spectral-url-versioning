@@ -14,7 +14,19 @@ export default createRulesetFunction({
     return [];
   }
 
-  const versionsMatches = targetVal.map(({ url }: any) => url.match(/([\\.|\\/|](v|version)?[0-9]{1,3}(?:\/)?)/i)[0]);
+  // Map through all the servers and see if they have versions, and if they do push them into a list
+  const versionsMatches = targetVal.reduce((result, { url }: any) => {
+    const matches = url.match(/([\\.|\\/|](v|version)?[0-9]{1,3}(?:\/)?)/i);
+    if (matches) {
+      result.push(matches[0]);
+    }
+    return result;
+  }, []);
+
+  // No versions, thats easy.
+  if (versionsMatches === null || typeof versionsMatches === 'undefined') {
+    return [];
+  }
 
   // If there are fewer than two versions mentioned there cannot be multiple versions
   if (versionsMatches.length < 2) {

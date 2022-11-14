@@ -29,6 +29,20 @@ testRule("only-major-api-versions", [
 		},
 		errors: [],
 	},
+  
+  // {
+	// 	name: "valid case: large versions are ok",
+	// 	document: {
+	// 		openapi: "3.1.0",
+	// 		info: { version: "1.0" },
+	// 		servers: [
+  //       {
+  //         url: 'http://localhost/v51'
+  //       },
+  //     ],
+	// 	},
+	// 	errors: [],
+	// },
 
 	{
 		name: "invalid case: minor is unnecessary",
