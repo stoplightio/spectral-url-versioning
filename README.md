@@ -2,7 +2,7 @@
 
 [![NPM Downloads](https://img.shields.io/npm/dw/@stoplight/spectral-url-versioning?color=blue)](https://www.npmjs.com/package/@stoplight/spectral-url-versioning) [![Stoplight Forest](https://img.shields.io/ecologi/trees/stoplightinc)][stoplight_forest]
 
-Scan an [OpenAPI](https://spec.openapis.org/oas/v3.1.0) document to detect security issues. As OpenAPI is only describing the surface level of the API it cannot see what is happening in your code, but it can spot obvious issues and outdated standards being used.
+API versioning can be a scary topic but there are a few easy wins that are always best avoided when using [OpenAPI](https://spec.openapis.org/oas/v3.1.0) to describe an API, like not squashing multiple global versions into a single file.
 
 ## Installation
 
