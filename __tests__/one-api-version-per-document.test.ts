@@ -207,4 +207,31 @@ testRule("one-api-version-per-document", [
       },
     ],
   },
+
+  {
+    name: "valid: same versions",
+    document: {
+      openapi: "3.1.0",
+      info: { version: "1.0" },
+      "servers": [
+        {
+          "url": "https://stoplight.io/mocks/my-project/docs/12345",
+          "description": "Mock server Stoplight"
+        },
+        {
+          "url": "http://localhost:3000/v1",
+          "description": "Local"
+        },
+        {
+          "url": "https://api.dev.site.com/v1",
+          "description": "Development"
+        },
+        {
+          "url": "https://v1.site.com",
+          "description": "Production"
+        }
+      ]
+    },
+    errors: [],
+  },
 ]);
