@@ -1,32 +1,52 @@
 import { createRulesetFunction } from '@stoplight/spectral-core';
 
+const VERSION_REGEXP = /^(?:v|version)?([0-9]+)$/i;
+
+function extractVersion(input: string) {
+  const value = VERSION_REGEXP.exec(input);
+  if (value !== null) {
+    return value[1];
+  }
+
+  return;
+}
+
+function isNonNullable<T>(value: T): value is NonNullable<T> {
+  return value !== null && value !== undefined;
+}
+
 /**
  * @author Phil Sturgeon <https://github.com/philsturgeon>
  */
-export default createRulesetFunction({
-  input: null,
-  options: {
-    type: ['null'],
+export default createRulesetFunction<{ url: string }[], null>({
+  input: {
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        url: {
+          type: 'string',
+          format: 'url',
+        }
+      },
+      required: ['url'],
+    }
   },
-}, (targetVal: Array<any>) => {
-
-  if (! Array.isArray(targetVal)) {
-    return [];
-  }
+  options: null,
+}, (targetVal) => {
 
   // Map through all the servers and see if they have versions, and if they do push them into a list
-  const versionsMatches = targetVal.reduce((result, { url }: any) => {
-    const matches = url.match(/([\\.|\\/|](v|version)?[0-9]{1,3}(?:\/)?)/i);
-    if (matches) {
-      result.push(matches[0]);
-    }
+  const versionsMatches = targetVal.reduce<string[]>((result, { url}) => {
+    const parsedUrl = new URL(url);
+    const versions = [
+      ...parsedUrl.host.split('.'),
+      ...parsedUrl.pathname.split('/'),
+    ].map(extractVersion);
+
+    result.push(...versions.filter(isNonNullable));
+
     return result;
   }, []);
-
-  // No versions, thats easy.
-  if (versionsMatches === null || typeof versionsMatches === 'undefined') {
-    return [];
-  }
 
   // If there are fewer than two versions mentioned there cannot be multiple versions
   if (versionsMatches.length < 2) {
